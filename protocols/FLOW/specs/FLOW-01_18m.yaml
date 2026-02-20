@@ -1,0 +1,52 @@
+id: FLOW-01
+title: "Predictive Entrainment — Flow State Induction"
+family: FLOW
+version: 1.0
+duration_s: 1080
+
+render:
+  sr: 44100
+  seed: 8001
+  peak_norm: true
+
+identity:
+  signature_hz: [220, 293, 440]
+  signature_ms: 180
+  signature_level: 0.008
+  family_tag: "Flow State"
+
+phases:
+  - name: "Entry"
+    start_s: 0
+    end_s: 300
+    intent: "Establish baseline rhythm"
+  - name: "Immersion"
+    start_s: 300
+    end_s: 900
+    intent: "Reduce self-monitoring, predictive groove"
+  - name: "Sustain"
+    start_s: 900
+    end_s: 1080
+    intent: "Maintain flow state"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.054
+      drift_hz: 0.006
+      drift_depth: 0.10
+  - type: "binaural"
+    params:
+      phase1_hz: 7.0
+      phase2_hz: 6.5
+      phase3_hz: 6.0
+      carrier_hz: 180.0
+      level: 0.013
+  - type: "steady_groove"
+    params:
+      phase2_enabled: true
+      phase3_enabled: true
+      bpm: 72.0
+      micro_variance: 0.02
+      level: 0.035

@@ -1,0 +1,53 @@
+id: SLEEP-03
+title: "Deep Delta"
+family: SLEEP
+duration_s: 3000
+render:
+  sr: 44100
+  seed: 2009
+  peak_norm: true
+
+phases:
+  - name: Drift
+    start_s: 0
+    end_s: 900
+    intent: "Permit low-effort descent toward hypnagogic rest"
+  - name: Descend
+    start_s: 900
+    end_s: 2100
+    intent: "Downshift arousal and support transition toward rest"
+  - name: Deep
+    start_s: 2100
+    end_s: 3000
+    intent: "Reintegrate and stabilize at an everyday baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: pink
+      level: 0.025
+      drift_hz: 0.01
+      drift_depth: 0.08
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 2
+      level: 0.020
+  
+  - type: sub
+    params:
+      hz_min: 40
+      hz_max: 48
+      level: 0.030
+  
+  - type: room_illusion
+    params:
+      enabled: true
+      room_ms: 15
+      room_level: 0.015
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.015

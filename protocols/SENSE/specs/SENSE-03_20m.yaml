@@ -1,0 +1,53 @@
+id: SENSE-03
+title: "Synesthetic Mapping"
+family: SENSE
+duration_s: 1200
+render:
+  sr: 44100
+  seed: 2011
+  peak_norm: true
+
+phases:
+  - name: Anchor
+    start_s: 0
+    end_s: 240
+    intent: "Anchor awareness to breath and posture"
+  - name: Cross
+    start_s: 240
+    end_s: 960
+    intent: "Increase signal resolution while maintaining regulation"
+  - name: Integrate
+    start_s: 960
+    end_s: 1200
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: pink
+      level: 0.028
+      drift_hz: 0.03
+      drift_depth: 0.12
+  
+  - type: binaural
+    params:
+      base_hz: 220
+      delta_hz: 8
+      level: 0.022
+  
+  - type: spatial_sweep
+    params:
+      sweep_period_s: 6.0
+      pan_depth: 0.7
+      level: 0.035
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 146.83
+      harmonics: [1, 2, 3, 4]
+      level: 0.020
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.018

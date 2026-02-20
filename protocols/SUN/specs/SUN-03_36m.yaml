@@ -1,0 +1,83 @@
+id: SUN-03
+title: "Small Universe - Advanced Three Dantian Orbit"
+family: SUN
+version: 1.0
+duration_s: 2160
+
+render:
+  sr: 44100
+  seed: 13003
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.012
+  family_tag: "Small Universe"
+
+phases:
+  - name: "Lower Dantian Root"
+    start_s: 0
+    end_s: 360
+    intent: "Store and stabilize in lower dantian"
+  - name: "Middle Dantian Open"
+    start_s: 360
+    end_s: 780
+    intent: "Warm chest center and soften front channel"
+  - name: "Upper Dantian Clarify"
+    start_s: 780
+    end_s: 1200
+    intent: "Light upper center with relaxed gaze"
+  - name: "Full Orbit"
+    start_s: 1200
+    end_s: 1980
+    intent: "One full orbit per long breath cycle"
+  - name: "Seal"
+    start_s: 1980
+    end_s: 2160
+    intent: "Return all energy to lower dantian and seal"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.042
+      drift_hz: 0.004
+      drift_depth: 0.08
+  - type: "binaural"
+    params:
+      phase1_hz: 7.0
+      phase2_hz: 8.0
+      phase3_hz: 9.0
+      phase4_start: 8.0
+      phase4_end: 10.0
+      phase5_hz: 6.5
+      carrier_hz: 182.0
+      level: 0.011
+  - type: "pulse_cues"
+    params:
+      phase2_rate_s: 30.0
+      phase3_rate_s: 30.0
+      phase4_rate_s: 22.0
+      phase5_rate_s: 36.0
+      level: 0.018
+      freq_hz: 220.0
+  - type: "harmonic_pad"
+    params:
+      phase3_enabled: true
+      base_freq: 220.0
+      level: 0.016
+      swell_rate_s: 24.0
+  - type: "breath_cues"
+    phases: [4]
+    params:
+      preset: "10-10"
+      level: 0.034
+      tone_hz: 860.0
+      pan_mag: 0.20
+  - type: "spatial_sweep"
+    params:
+      sweep_period_s: 18.0
+      pan_depth: 0.30
+      level: 0.010
+breath_pattern: "10-10"

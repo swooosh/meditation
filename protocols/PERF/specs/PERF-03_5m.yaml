@@ -1,0 +1,43 @@
+id: PERF-03
+title: "Micro-Dose Focus"
+family: PERF
+duration_s: 300
+render:
+  sr: 44100
+  seed: 2003
+  peak_norm: true
+
+phases:
+  - name: Ramp
+    start_s: 0
+    end_s: 180
+    intent: "Increase activation gradually while maintaining control"
+  - name: Peak
+    start_s: 180
+    end_s: 300
+    intent: "Stabilize high activation without overshoot"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.028
+      drift_hz: 0.05
+      drift_depth: 0.10
+  
+  - type: binaural
+    params:
+      base_hz: 220
+      delta_hz: 14
+      level: 0.025
+  
+  - type: pulse_cues
+    params:
+      interval_s: 8
+      width_ms: 90
+      level: 0.050
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.022

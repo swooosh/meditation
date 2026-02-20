@@ -1,0 +1,51 @@
+id: META-01
+title: "Observer Dissolution — Non-Dual Pointer"
+family: META
+version: 1.0
+duration_s: 1200
+
+render:
+  sr: 44100
+  seed: 7001
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020
+  family_tag: "Self-Model Exploration"
+
+phases:
+  - name: "Locate Observer"
+    start_s: 0
+    end_s: 300
+    intent: "Identify sense of self"
+  - name: "Spatial Shift"
+    start_s: 300
+    end_s: 900
+    intent: "Relocate self-reference"
+  - name: "Dissolve"
+    start_s: 900
+    end_s: 1200
+    intent: "Separate awareness from content"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.056
+      drift_hz: 0.004
+      drift_depth: 0.06
+  - type: "binaural"
+    params:
+      phase1_hz: 7.5
+      phase2_hz: 6.0
+      phase3_hz: 5.0
+      carrier_hz: 170.0
+      level: 0.012
+  - type: "location_tones"
+    params:
+      phase2_rate_s: 90.0
+      pan_sweep: true
+      level: 0.018
+      freq_hz: 220.0

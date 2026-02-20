@@ -1,0 +1,136 @@
+id: ARC-1TB
+title: "Adaptive Respiratory Cycle — Tribal Breath"
+family: ARC
+version: 2.0
+duration_s: 3600
+
+render:
+  sr: 44100
+  seed: 1337
+  peak_norm: false
+  bus_softclip: true
+  clip_drive: 1.6
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020
+  family_tag: "Somatic Intensity"
+
+phases:
+  - name: "Ground"
+    start_s: 0
+    end_s: 600
+    breath_rate: 6.0
+    intent: "Establish baseline coherence"
+  - name: "Activation Ramp"
+    start_s: 600
+    end_s: 1200
+    breath_rate_start: 6.0
+    breath_rate_end: 18.0
+    intent: "Gradual sympathetic activation"
+  - name: "Boundary Softening"
+    start_s: 1200
+    end_s: 2100
+    breath_rate_start: 18.0
+    breath_rate_end: 26.0
+    intent: "Controlled intensity plateau"
+  - name: "Wave Cycling"
+    start_s: 2100
+    end_s: 3000
+    breath_rate_peak: 28.0
+    breath_rate_recover: 18.0
+    wave_pattern: "peak-recover-peak-recover-peak"
+    intent: "Oscillating depth with contrast"
+  - name: "Reintegration"
+    start_s: 3000
+    end_s: 3600
+    breath_rate_start: 18.0
+    breath_rate_end: 6.0
+    intent: "Smooth parasympathetic return"
+
+levels:
+  standard:
+    intensity_scale: 1.0
+    floor_level: 0.038
+    drum_level: 0.095
+    accent_level: 0.070
+    shaker_level: 0.050
+    sub_level: 0.060
+    phase4_peak_multiplier: 1.25
+    phase4_recover_multiplier: 0.75
+
+audio_layers:
+  - type: "tribal_drums"
+    params:
+      floor_level: 0.038
+      drum_level: 0.095
+      accent_level: 0.070
+      shaker_level: 0.050
+      frame_f0: 76.0
+      frame_dur_s: 0.115
+      tom_f0: 60.0
+      tom_dur_s: 0.165
+      floor_jitter_s: 0.006
+      drum_jitter_s: 0.010
+      accent_jitter_s: 0.012
+      shaker_jitter_s: 0.010
+      phase4_peak_multiplier: 1.25
+      phase4_recover_multiplier: 0.75
+      accent_peak_multiplier: 1.35
+      accent_recover_multiplier: 0.45
+      shaker_peak_multiplier: 1.20
+      voices:
+        - name: "frame_drum"
+          f0: 76.0
+          dur_s: 0.115
+        - name: "low_tom"
+          f0: 60.0
+          dur_s: 0.165
+        - name: "wood_tick"
+          dur_s: 0.028
+        - name: "shaker"
+          dur_s: 0.060
+  - type: "sub"
+    params:
+      mode: "breath_locked"
+      block_seconds: 1.0
+      hz_min: 48.0
+      hz_max: 58.0
+      level: 0.060
+      phase4_peak_multiplier: 1.18
+      phase4_recover_multiplier: 0.72
+  - type: "room_illusion"
+    params:
+      enabled: true
+      room_ms: 11.0
+      room_level: 0.020
+      ambience_level: 0.006
+
+breath_curve:
+  - t_min: 0
+    br: 6.0
+  - t_min: 10
+    br: 6.0
+  - t_min: 20
+    br: 18.0
+  - t_min: 25
+    br: 26.0
+  - t_min: 35
+    br: 26.0
+  - t_min: 38
+    br: 28.0
+  - t_min: 40
+    br: 18.0
+  - t_min: 43
+    br: 28.0
+  - t_min: 45
+    br: 18.0
+  - t_min: 48
+    br: 28.0
+  - t_min: 50
+    br: 18.0
+  - t_min: 54
+    br: 10.0
+  - t_min: 60
+    br: 6.0

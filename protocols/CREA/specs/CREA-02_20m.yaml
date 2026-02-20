@@ -1,0 +1,50 @@
+id: CREA-02
+title: "Divergent Thinking"
+family: CREA
+duration_s: 1200
+render:
+  sr: 44100
+  seed: 2001
+  peak_norm: true
+
+phases:
+  - name: Baseline
+    start_s: 0
+    end_s: 300
+    intent: "Map current state clearly before modulation"
+  - name: Diverge
+    start_s: 300
+    end_s: 900
+    intent: "Open cognitive flexibility and increase associative range"
+  - name: Integrate
+    start_s: 900
+    end_s: 1200
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.032
+      drift_hz: 0.03
+      drift_depth: 0.15
+  
+  - type: irregular_pulses
+    params:
+      min_interval_s: 4
+      max_interval_s: 18
+      width_ms: 120
+      level: 0.045
+  
+  - type: gamma_overlay
+    params:
+      phase2_enabled: true
+      phase3_enabled: true
+      freq_hz: 40
+      burst_rate_s: 6
+      level: 0.030
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

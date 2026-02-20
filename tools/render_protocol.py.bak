@@ -1,0 +1,280 @@
+#!/usr/bin/env python3
+"""Universal protocol renderer."""
+import argparse
+import math
+import os
+import random
+import sys
+import yaml
+
+# Add protocol-lab root to path
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from engine.dsp.noise import voss_pink_noise, brown_noise
+from engine.dsp.envelopes import smoothstep, fade_in_out, swell_env
+from engine.dsp.binaural import add_binaural_constant, add_binaural_ramp
+from engine.render.render_core import pan_gains, normalize_stereo, write_wav_stereo, mix_in
+from engine.render.validate import qc_report
+
+
+def build_noise_bed(sr, total_s, noise, level, drift_hz, drift_depth, high_shelf=0.0):
+    n = int(total_s * sr)
+    base_l = voss_pink_noise(n) if noise == "pink" else brown_noise(n)
+    base_r = voss_pink_noise(n) if noise == "pink" else brown_noise(n)
+    
+    l, r = [0.0] * n, [0.0] * n
+    for i in range(n):
+        t = i / sr
+        pan = drift_depth * math.sin(2.0 * math.pi * drift_hz * t)
+        gl, gr = pan_gains(pan)
+        
+        nl, nr = base_l[i], base_r[i]
+        if high_shelf > 0:
+            nl = nl * (1.0 + high_shelf * (i / n))
+            nr = nr * (1.0 + high_shelf * (i / n))
+        
+        mid = 0.5 * (nl + nr)
+        side = 0.5 * (nl - nr)
+        l[i] = level * (mid + gl * side)
+        r[i] = level * (mid - gr * side)
+    
+    fade_in_out(l, sr, 2.0)
+    fade_in_out(r, sr, 2.0)
+    return l, r
+
+
+def add_pulse_cues(l, r, sr, start_s, end_s, rate_s, level, freq_hz):
+    t = start_s
+    while t < end_s:
+        cue = [level * math.sin(2 * math.pi * freq_hz * i / sr) * 
+               math.exp(-i / (sr * 0.08)) for i in range(int(0.12 * sr))]
+        idx = int(t * sr)
+        mix_in(l, idx, cue, 1.0)
+        mix_in(r, idx, cue, 1.0)
+        t += rate_s
+
+
+def add_irregular_pulses(l, r, sr, start_s, end_s, base_rate_s, jitter, level):
+    t = start_s
+    while t < end_s:
+        actual_rate = base_rate_s * (1.0 + random.uniform(-jitter, jitter))
+        cue = [level * random.uniform(-1, 1) * math.exp(-i / (sr * 0.05)) 
+               for i in range(int(0.08 * sr))]
+        idx = int(t * sr)
+        mix_in(l, idx, cue, 1.0)
+        mix_in(r, idx, cue, 1.0)
+        t += actual_rate
+
+
+def add_harmonic_pad(l, r, sr, start_s, end_s, base_freq, level, swell_rate_s):
+    t = start_s
+    while t < end_s:
+        dur = min(swell_rate_s * 0.8, end_s - t)
+        n = int(dur * sr)
+        env = swell_env(n, sr, dur * 0.3, dur * 0.1, dur * 0.6)
+        pad = [0.0] * n
+        for i in range(n):
+            s = math.sin(2 * math.pi * base_freq * i / sr)
+            s += 0.5 * math.sin(2 * math.pi * base_freq * 1.5 * i / sr)
+            pad[i] = level * env[i] * s
+        idx = int(t * sr)
+        mix_in(l, idx, pad, 1.0)
+        mix_in(r, idx, pad, 1.0)
+        t += swell_rate_s
+
+
+def add_signature(l, r, sr, start_s, freqs_hz, duration_ms, level):
+    """Add three-tone signature at specified time."""
+    tone_samples = int(duration_ms * sr / 1000)
+    start_idx = int(start_s * sr)
+    
+    for freq in freqs_hz:
+        for i in range(tone_samples):
+            if start_idx + i < len(l):
+                t = i / sr
+                # Exponential decay envelope
+                env = math.exp(-t / (duration_ms / 1000 * 0.3))
+                val = level * math.sin(2 * math.pi * freq * t) * env
+                l[start_idx + i] += val
+                r[start_idx + i] += val
+        start_idx += tone_samples
+
+
+def render_protocol(spec, sr):
+    random.seed(spec['render']['seed'])
+    total_s = spec['duration_s']
+    n = int(total_s * sr)
+    l, r = [0.0] * n, [0.0] * n
+    
+    # Check if this is old format (has 'levels' instead of 'audio_layers')
+    if 'levels' in spec and 'audio_layers' not in spec:
+        print(f"Warning: {spec['id']} uses old format - skipping for now")
+        # Return silence for old format protocols
+        return l, r
+    
+    # Noise bed
+    for layer in spec.get('audio_layers', []):
+        if layer['type'] == 'noise_bed':
+            # Handle both old format (params as siblings) and new format (params as dict)
+            if 'params' in layer:
+                p = layer['params']
+            else:
+                p = layer  # Old format: params are direct children
+            
+            noise_type = p.get('noise_type', p.get('noise', 'brown'))
+            bl, br = build_noise_bed(sr, total_s, noise_type, p.get('level', 0.03), 
+                                     p.get('drift_hz', 0.02), p.get('drift_depth', 0.1), 
+                                     p.get('high_shelf', 0.0))
+            for i in range(n):
+                l[i] += bl[i]
+                r[i] += br[i]
+        
+        elif layer['type'] == 'binaural':
+            # Handle both formats
+            p = layer.get('params', layer)
+            phases = spec['phases']
+            for i, phase in enumerate(phases):
+                start, end = phase['start_s'], phase['end_s']
+                dur = end - start
+                seg_l = [0.0] * int(dur * sr)
+                seg_r = [0.0] * int(dur * sr)
+                
+                key = f'phase{i+1}_hz'
+                if key in p:
+                    add_binaural_constant(seg_l, seg_r, sr, p[key], 
+                                        p.get('carrier_hz', 174), p.get('level', 0.02), 2.0)
+                else:
+                    start_key = f'phase{i+1}_start'
+                    end_key = f'phase{i+1}_end'
+                    if start_key in p and end_key in p:
+                        add_binaural_ramp(seg_l, seg_r, sr, p[start_key], 
+                                        p[end_key], dur, p.get('carrier_hz', 174), 
+                                        p['level'], 2.0)
+                
+                for j in range(len(seg_l)):
+                    idx = int(start * sr) + j
+                    if idx < n:
+                        l[idx] += seg_l[j]
+                        r[idx] += seg_r[j]
+        
+        elif layer['type'] == 'pulse_cues':
+            p = layer['params']
+            for i, phase in enumerate(spec['phases'][1:], 1):
+                rate_key = f'phase{i+1}_rate_s'
+                if rate_key in p:
+                    add_pulse_cues(l, r, sr, phase['start_s'], phase['end_s'],
+                                 p[rate_key], p['level'], p['freq_hz'])
+        
+        elif layer['type'] == 'irregular_pulses':
+            p = layer['params']
+            for i, phase in enumerate(spec['phases'][1:], 1):
+                jitter_key = f'phase{i+1}_jitter'
+                if jitter_key in p:
+                    add_irregular_pulses(l, r, sr, phase['start_s'], 
+                                       phase['end_s'], p['base_rate_s'],
+                                       p[jitter_key], p['level'])
+        
+        elif layer['type'] == 'harmonic_pad':
+            p = layer['params']
+            if p.get('phase3_enabled'):
+                phase = spec['phases'][2]
+                add_harmonic_pad(l, r, sr, phase['start_s'], phase['end_s'],
+                               p['base_freq'], p['level'], p['swell_rate_s'])
+        
+        elif layer['type'] == 'spatial_sweep':
+            from engine.dsp.spatial import spatial_sweep
+            p = layer['params']
+            sl, sr = spatial_sweep(sr, total_s, p['sweep_period_s'], p['pan_depth'])
+            for i in range(n):
+                l[i] += sl[i] * p['level']
+                r[i] += sr[i] * p['level']
+        
+        elif layer['type'] == 'switch_cues':
+            p = layer['params']
+            switch_interval_s = p['switch_interval_s']
+            cue_width_ms = p['cue_width_ms']
+            cue_level = p['cue_level']
+            tone_hz = p['tone_hz']
+            
+            cue_samples = int(cue_width_ms * sr / 1000)
+            interval_samples = int(switch_interval_s * sr)
+            
+            for start_sample in range(0, n, interval_samples):
+                if start_sample + cue_samples <= n:
+                    for i in range(cue_samples):
+                        t = i / sr
+                        tone = math.sin(2 * math.pi * tone_hz * t)
+                        env = math.exp(-5 * abs(t - cue_width_ms/2000) / (cue_width_ms/2000))
+                        val = tone * env * cue_level
+                        l[start_sample + i] += val
+                        r[start_sample + i] += val
+        
+        elif layer['type'] == 'gamma_overlay':
+            p = layer['params']
+            freq_hz = p['freq_hz']
+            burst_rate_s = p['burst_rate_s']
+            level = p['level']
+            
+            for i, phase in enumerate(spec['phases']):
+                phase_num = i + 1
+                enabled_key = f'phase{phase_num}_enabled'
+                if p.get(enabled_key, False):
+                    start_s = phase['start_s']
+                    end_s = phase['end_s']
+                    t = start_s
+                    while t < end_s:
+                        burst_start = int(t * sr)
+                        burst_samples = int(0.2 * sr)
+                        for j in range(burst_samples):
+                            if burst_start + j < n:
+                                sample_t = j / sr
+                                gamma = math.sin(2 * math.pi * freq_hz * sample_t)
+                                env = math.exp(-sample_t / 0.05)
+                                val = gamma * env * level
+                                l[burst_start + j] += val
+                                r[burst_start + j] += val
+                        t += burst_rate_s
+    
+    # Add signature tones at start and phase transitions
+    if 'identity' in spec and 'signature_hz' in spec['identity']:
+        sig_freqs = spec['identity']['signature_hz']
+        sig_ms = spec['identity'].get('signature_ms', 300)
+        sig_level = spec['identity'].get('signature_level', 0.020)
+        
+        # Signature at start (0s)
+        add_signature(l, r, sr, 0.0, sig_freqs, sig_ms, sig_level)
+        
+        # Signature at each phase transition
+        for phase in spec['phases'][1:]:
+            add_signature(l, r, sr, phase['start_s'], sig_freqs, sig_ms, sig_level)
+    
+    if spec['render']['peak_norm']:
+        l, r = normalize_stereo(l, r, 0.98)
+    
+    return l, r
+
+
+def main():
+    p = argparse.ArgumentParser()
+    p.add_argument("spec", help="Path to YAML spec")
+    p.add_argument("--out_dir", default="renders")
+    args = p.parse_args()
+    
+    with open(args.spec) as f:
+        spec = yaml.safe_load(f)
+    
+    sr = spec['render']['sr']
+    print(f"Rendering {spec['id']}...")
+    
+    l, r = render_protocol(spec, sr)
+    
+    out_path = os.path.join(args.out_dir, f"{spec['id']}_master.wav")
+    write_wav_stereo(out_path, l, r, sr)
+    
+    metrics = qc_report(l, r, sr)
+    print(f"Complete: {out_path}")
+    print(f"Peak: {metrics['peak']:.3f} | RMS: {metrics['rms']:.4f}")
+
+
+if __name__ == "__main__":
+    main()

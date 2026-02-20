@@ -1,0 +1,146 @@
+id: FSP-01
+title: "Focused State Protocol — Gateway-Inspired Attentional Architecture"
+family: FSP
+version: 1.0
+duration_s: 1860
+
+render:
+  sr: 44100
+  seed: 1337
+  peak_norm: true
+  bus_softclip: false
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.012
+  family_tag: "Attentional Architecture"
+
+phases:
+  - name: "Downshift"
+    start_s: 0
+    end_s: 420
+    intent: "Calm breath-driven parasympathetic activation"
+  - name: "Body Scan"
+    start_s: 420
+    end_s: 720
+    intent: "Somatic awareness grounding"
+  - name: "Attentional Lock"
+    start_s: 720
+    end_s: 1200
+    intent: "Narrow focus window with binaural entrainment"
+  - name: "State Shift"
+    start_s: 1200
+    end_s: 1680
+    intent: "Controlled depth with descending binaural ramp"
+  - name: "Reintegration"
+    start_s: 1680
+    end_s: 1860
+    intent: "Gentle return to baseline alertness"
+
+levels:
+  living:
+    intensity_scale: 1.0
+    p3_noise: "brown"
+    p3_noise_level: 0.068
+    p3_drift_hz: 0.010
+    p3_drift_depth: 0.22
+    p3_binaural_hz: 9.0
+    p3_carrier_hz: 180.0
+    p3_binaural_level: 0.017
+    p3_return_every: 75.0
+    p3_return_level: 0.070
+    p4_noise: "brown"
+    p4_noise_level: 0.066
+    p4_drift_hz: 0.009
+    p4_drift_depth: 0.24
+    p4_carrier_hz: 170.0
+    p4_bb_start: 8.5
+    p4_bb_end: 6.0
+    p4_bb_level: 0.018
+    p4_bb_ramp_s: 180.0
+    p4_letgo_every: 120.0
+    p4_letgo_level: 0.060
+  temple:
+    intensity_scale: 0.85
+    p3_noise: "brown"
+    p3_noise_level: 0.064
+    p3_drift_hz: 0.006
+    p3_drift_depth: 0.10
+    p3_binaural_hz: 10.0
+    p3_carrier_hz: 190.0
+    p3_binaural_level: 0.014
+    p3_return_every: 0.0
+    p4_noise: "brown"
+    p4_noise_level: 0.062
+    p4_drift_hz: 0.006
+    p4_drift_depth: 0.12
+    p4_carrier_hz: 180.0
+    p4_bb_start: 8.0
+    p4_bb_end: 6.5
+    p4_bb_level: 0.014
+    p4_bb_ramp_s: 210.0
+    p4_letgo_every: 0.0
+  focus:
+    intensity_scale: 1.15
+    p3_noise: "pink"
+    p3_noise_level: 0.070
+    p3_drift_hz: 0.012
+    p3_drift_depth: 0.18
+    p3_binaural_hz: 12.0
+    p3_carrier_hz: 200.0
+    p3_binaural_level: 0.018
+    p3_return_every: 45.0
+    p3_return_level: 0.080
+    p4_noise: "pink"
+    p4_noise_level: 0.068
+    p4_drift_hz: 0.012
+    p4_drift_depth: 0.18
+    p4_carrier_hz: 190.0
+    p4_bb_start: 10.0
+    p4_bb_end: 8.0
+    p4_bb_level: 0.018
+    p4_bb_ramp_s: 150.0
+    p4_letgo_every: 180.0
+    p4_letgo_level: 0.045
+
+audio_layers:
+  - type: "noise_bed"
+    phases: [1, 2, 3, 4, 5]
+  - type: "binaural"
+    phases: [3, 4, 5]
+  - type: "breath_cues"
+    phases: [1]
+    params:
+      preset: "4-6"
+      level: 0.055
+      tone_hz: 880.0
+      pan_mag: 0.15
+  - type: "return_cues"
+    phases: [3]
+    params:
+      conditional: true
+  - type: "letgo_swells"
+    phases: [4]
+    params:
+      conditional: true
+  - type: "house_beat"
+    phases: [5]
+    params:
+      enabled: false
+      bpm: 122.0
+      level: 0.06
+      swing: 0.0
+
+narration:
+  - time_s: 0
+    text: "Begin with natural breath"
+  - time_s: 420
+    text: "Scan body from feet to crown"
+  - time_s: 720
+    text: "Narrow attention to single point"
+  - time_s: 1200
+    text: "Allow state to deepen"
+  - time_s: 1680
+    text: "Gently return awareness"
+breath_pattern: "4-6"

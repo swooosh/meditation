@@ -1,0 +1,48 @@
+id: FSP-03
+title: "Rapid Context Switching"
+family: ATTN
+duration_s: 900
+render:
+  sr: 44100
+  seed: 2006
+  peak_norm: true
+
+phases:
+  - name: Baseline
+    start_s: 0
+    end_s: 180
+    intent: "Map current state clearly before modulation"
+  - name: Switch
+    start_s: 180
+    end_s: 720
+    intent: "Practice clean context shifts without losing stability"
+  - name: Stabilize
+    start_s: 720
+    end_s: 900
+    intent: "Reintegrate and stabilize at an everyday baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.030
+      drift_hz: 0.04
+      drift_depth: 0.10
+  
+  - type: binaural
+    params:
+      base_hz: 220
+      delta_hz: 12
+      level: 0.020
+  
+  - type: switch_cues
+    params:
+      switch_interval_s: 45
+      cue_width_ms: 120
+      cue_level: 0.055
+      tone_hz: 440
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

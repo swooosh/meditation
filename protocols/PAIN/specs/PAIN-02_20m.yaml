@@ -1,0 +1,53 @@
+id: PAIN-02
+title: "Sensation Reframe"
+family: PAIN
+duration_s: 1200
+render:
+  sr: 44100
+  seed: 2018
+  peak_norm: true
+
+phases:
+  - name: Baseline
+    start_s: 0
+    end_s: 300
+    intent: "Map current state clearly before modulation"
+  - name: Reframe
+    start_s: 300
+    end_s: 900
+    intent: "Reinterpret sensation through context and attentional control"
+  - name: Integrate
+    start_s: 900
+    end_s: 1200
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: white
+      level: 0.032
+      drift_hz: 0.05
+      drift_depth: 0.16
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 8
+      level: 0.025
+  
+  - type: pulse_cues
+    params:
+      interval_s: 8
+      width_ms: 120
+      level: 0.042
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 110
+      harmonics: [1, 2, 3]
+      level: 0.020
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.018

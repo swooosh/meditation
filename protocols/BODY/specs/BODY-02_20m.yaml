@@ -1,0 +1,71 @@
+id: BODY-02
+title: "Power Embodiment"
+family: BODY
+duration_s: 1200
+render:
+  sr: 44100
+  seed: 2014
+  peak_norm: true
+
+phases:
+  - name: Awaken
+    start_s: 0
+    end_s: 300
+    intent: "Establish baseline stability for the session"
+  - name: Amplify
+    start_s: 300
+    end_s: 900
+    intent: "Increase grounding, embodiment, and somatic readiness"
+  - name: Anchor
+    start_s: 900
+    end_s: 1200
+    intent: "Anchor awareness to breath and posture"
+    bpm_start: 12
+    bpm_end: 8
+
+breath_curve:
+  - t_min: 0
+    br: 6.0
+  - t_min: 5
+    br: 8.0
+  - t_min: 15
+    br: 12.0
+  - t_min: 20
+    br: 8.0
+
+audio_layers:
+  - type: tribal_drums
+    params:
+      breath_locked: true
+      floor_level: 0.035
+      drum_level: 0.065
+      accent_level: 0.050
+      shaker_level: 0.035
+      intensity_scale: 0.70
+      frame_f0: 76.0
+      frame_dur_s: 0.115
+      tom_f0: 60.0
+      tom_dur_s: 0.165
+      floor_jitter_s: 0.006
+      drum_jitter_s: 0.010
+      accent_jitter_s: 0.012
+      shaker_jitter_s: 0.010
+  
+  - type: sub
+    params:
+      mode: breath_locked
+      block_seconds: 1.0
+      hz_min: 50
+      hz_max: 58
+      level: 0.050
+  
+  - type: pulse_cues
+    params:
+      interval_s: 8
+      width_ms: 120
+      level: 0.045
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

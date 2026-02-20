@@ -1,0 +1,72 @@
+id: SUN-02
+title: "Small Universe - Intermediate Orbit"
+family: SUN
+version: 1.0
+duration_s: 1440
+
+render:
+  sr: 44100
+  seed: 13002
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 250
+  signature_level: 0.012
+  family_tag: "Small Universe"
+
+phases:
+  - name: "Settle"
+    start_s: 0
+    end_s: 240
+    intent: "Lower dantian grounding and soft body release"
+  - name: "Back Channel Rise"
+    start_s: 240
+    end_s: 780
+    intent: "Inhale rise up spine toward crown"
+  - name: "Front Channel Descent"
+    start_s: 780
+    end_s: 1260
+    intent: "Exhale descent down front body to lower dantian"
+  - name: "Seal"
+    start_s: 1260
+    end_s: 1440
+    intent: "Store and seal at lower dantian"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.044
+      drift_hz: 0.005
+      drift_depth: 0.10
+  - type: "binaural"
+    params:
+      phase1_hz: 7.5
+      phase2_start: 8.0
+      phase2_end: 10.0
+      phase3_start: 10.0
+      phase3_end: 7.0
+      phase4_hz: 6.5
+      carrier_hz: 185.0
+      level: 0.012
+  - type: "breath_cues"
+    phases: [2, 3]
+    params:
+      preset: "6-8"
+      level: 0.038
+      tone_hz: 840.0
+      pan_mag: 0.20
+  - type: "spatial_sweep"
+    params:
+      sweep_period_s: 14.0
+      pan_depth: 0.35
+      level: 0.012
+  - type: "pulse_cues"
+    params:
+      phase2_rate_s: 28.0
+      phase3_rate_s: 28.0
+      phase4_rate_s: 36.0
+      level: 0.016
+      freq_hz: 220.0
+breath_pattern: "6-8"

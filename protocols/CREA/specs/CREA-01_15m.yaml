@@ -1,0 +1,51 @@
+id: CREA-01
+title: "Pattern Disruption — Creative Emergence"
+family: CREA
+version: 1.0
+duration_s: 900
+
+render:
+  sr: 44100
+  seed: 5001
+  peak_norm: true
+
+identity:
+  signature_hz: [293, 440, 587]
+  signature_ms: 180
+  signature_level: 0.015
+  family_tag: "Creative Amplification"
+
+phases:
+  - name: "Baseline"
+    start_s: 0
+    end_s: 180
+    intent: "Establish predictable rhythm"
+  - name: "Perturbation"
+    start_s: 180
+    end_s: 600
+    intent: "Introduce controlled irregularity"
+  - name: "Emergence"
+    start_s: 600
+    end_s: 900
+    intent: "Open associative space"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "pink"
+      level: 0.060
+      drift_hz: 0.011
+      drift_depth: 0.20
+  - type: "binaural"
+    params:
+      phase1_hz: 10.0
+      phase2_hz: 13.0
+      phase3_hz: 14.0
+      carrier_hz: 195.0
+      level: 0.017
+  - type: "irregular_pulses"
+    params:
+      phase2_jitter: 0.35
+      phase3_jitter: 0.50
+      base_rate_s: 8.0
+      level: 0.040

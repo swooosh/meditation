@@ -1,0 +1,75 @@
+id: ARC-3
+title: "Peak Intensity"
+family: ARC
+duration_s: 1800
+render:
+  sr: 44100
+  seed: 2007
+  peak_norm: true
+
+phases:
+  - name: Prepare
+    start_s: 0
+    end_s: 300
+    intent: "Establish baseline stability for the session"
+    bpm: 6
+  - name: Ascend
+    start_s: 300
+    end_s: 900
+    intent: "Guide breath-led arousal changes with controlled pacing"
+    bpm_start: 6
+    bpm_end: 18
+  - name: Peak
+    start_s: 900
+    end_s: 1500
+    intent: "Stabilize high activation without overshoot"
+    bpm: 18
+  - name: Recover
+    start_s: 1500
+    end_s: 1800
+    intent: "Reintegrate and stabilize at an everyday baseline"
+    bpm_start: 18
+    bpm_end: 6
+
+audio_layers:
+  - type: tribal_drums
+    params:
+      floor_level: 0.030
+      drum_level: 0.070
+      accent_level: 0.055
+      shaker_level: 0.040
+      intensity_scale: 0.85
+      frame_f0: 76.0
+      frame_dur_s: 0.115
+      tom_f0: 60.0
+      tom_dur_s: 0.165
+      floor_jitter_s: 0.006
+      drum_jitter_s: 0.010
+      accent_jitter_s: 0.012
+      shaker_jitter_s: 0.010
+      phase4_peak_multiplier: 1.20
+      phase4_recover_multiplier: 0.82
+      accent_peak_multiplier: 1.25
+      accent_recover_multiplier: 0.60
+      shaker_peak_multiplier: 1.18
+  
+  - type: sub
+    params:
+      mode: breath_locked
+      block_seconds: 1.0
+      hz_min: 45
+      hz_max: 60
+      level: 0.055
+      phase4_peak_multiplier: 1.15
+      phase4_recover_multiplier: 0.80
+  
+  - type: room_illusion
+    params:
+      enabled: true
+      room_ms: 13
+      room_level: 0.025
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

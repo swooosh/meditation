@@ -1,0 +1,53 @@
+id: META-02
+title: "Witness Perspective"
+family: META
+duration_s: 1800
+render:
+  sr: 44100
+  seed: 2012
+  peak_norm: true
+
+phases:
+  - name: Identify
+    start_s: 0
+    end_s: 600
+    intent: "Establish baseline stability for the session"
+  - name: Separate
+    start_s: 600
+    end_s: 1200
+    intent: "Reduce self-referential load and stabilize observing awareness"
+  - name: Witness
+    start_s: 1200
+    end_s: 1800
+    intent: "Reintegrate and stabilize at an everyday baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.025
+      drift_hz: 0.015
+      drift_depth: 0.10
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 6
+      level: 0.018
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 130.81
+      harmonics: [1, 2, 3]
+      level: 0.015
+  
+  - type: pulse_cues
+    params:
+      interval_s: 25
+      width_ms: 90
+      level: 0.030
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.015

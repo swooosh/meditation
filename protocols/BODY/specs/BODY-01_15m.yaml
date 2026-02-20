@@ -1,0 +1,87 @@
+id: BODY-01
+title: "Grounded Power — Embodied Presence"
+family: BODY
+version: 1.0
+duration_s: 900
+
+render:
+  sr: 44100
+  seed: 10001
+  peak_norm: true
+
+identity:
+  signature_hz: [110, 174, 220]
+  signature_ms: 300
+  signature_level: 0.015
+  family_tag: "Somatic Power"
+
+phases:
+  - name: "Root"
+    start_s: 0
+    end_s: 300
+    intent: "Establish ground connection"
+    bpm: 6
+  - name: "Build"
+    start_s: 300
+    end_s: 720
+    intent: "Accumulate power"
+    bpm_start: 6
+    bpm_end: 10
+  - name: "Hold"
+    start_s: 720
+    end_s: 900
+    intent: "Stable embodied presence"
+    bpm: 10
+
+breath_curve:
+  - t_min: 0
+    br: 6.0
+  - t_min: 5
+    br: 8.0
+  - t_min: 12
+    br: 10.0
+  - t_min: 15
+    br: 10.0
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.050
+      drift_hz: 0.005
+      drift_depth: 0.08
+  - type: "tribal_drums"
+    params:
+      breath_locked: true
+      floor_level: 0.022
+      drum_level: 0.040
+      accent_level: 0.030
+      shaker_level: 0.020
+      intensity_scale: 0.50
+      frame_f0: 74.0
+      frame_dur_s: 0.110
+      tom_f0: 58.0
+      tom_dur_s: 0.160
+      floor_jitter_s: 0.006
+      drum_jitter_s: 0.010
+      accent_jitter_s: 0.012
+      shaker_jitter_s: 0.010
+  - type: "sub"
+    params:
+      mode: "breath_locked"
+      block_seconds: 1.0
+      hz_min: 42.0
+      hz_max: 56.0
+      level: 0.055
+  - type: "body_cues"
+    params:
+      phase2_enabled: true
+      transient_level: 0.050
+      freq_hz: 110.0
+      rate_s: 45.0
+  - type: "room_illusion"
+    params:
+      enabled: true
+      room_ms: 8.0
+      room_level: 0.015
+      narrow_image: true

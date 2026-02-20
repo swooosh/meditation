@@ -1,0 +1,59 @@
+id: RECON-02
+title: "Grief Container — Loss Processing"
+family: RECON
+version: 1.0
+duration_s: 2100
+
+render:
+  sr: 44100
+  seed: 3002
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 400
+  signature_level: 0.012
+  family_tag: "Emotional Reprocessing"
+
+phases:
+  - name: "Safe Space"
+    start_s: 0
+    end_s: 420
+    intent: "Build psychological and physiological safety before deeper work"
+  - name: "Allow"
+    start_s: 420
+    end_s: 1200
+    intent: "Allow experience to arise without suppression or escalation"
+  - name: "Resolution"
+    start_s: 1200
+    end_s: 2100
+    intent: "Downshift activation and consolidate processing"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.060
+      drift_hz: 0.006
+      drift_depth: 0.18
+  - type: "binaural"
+    params:
+      phase1_hz: 7.0
+      phase2_start: 7.0
+      phase2_end: 5.5
+      phase3_hz: 6.5
+      carrier_hz: 170.0
+      level: 0.014
+  - type: "harmonic_pad"
+    params:
+      phase2_enabled: true
+      base_freq: 146.83
+      mode: "minor_to_open_fifth"
+      level: 0.028
+      swell_rate_s: 120.0
+  - type: "room_illusion"
+    params:
+      enabled: true
+      room_ms: 15.0
+      room_level: 0.025
+      wide_image: true

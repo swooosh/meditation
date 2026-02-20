@@ -1,0 +1,55 @@
+id: SENSE-02
+title: "Interoceptive Precision — Internal Signal Awareness"
+family: SENSE
+version: 1.0
+duration_s: 900
+
+render:
+  sr: 44100
+  seed: 6002
+  peak_norm: true
+
+identity:
+  signature_hz: [440, 587, 880]
+  signature_ms: 150
+  signature_level: 0.012
+  family_tag: "Sensory Precision"
+
+phases:
+  - name: "Baseline"
+    start_s: 0
+    end_s: 180
+    intent: "Map current state clearly before modulation"
+  - name: "Amplify Internal"
+    start_s: 180
+    end_s: 720
+    intent: "Increase signal resolution while maintaining regulation"
+  - name: "Integrate"
+    start_s: 720
+    end_s: 900
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.050
+      drift_hz: 0.007
+      drift_depth: 0.10
+  - type: "binaural"
+    params:
+      phase1_hz: 8.0
+      phase2_hz: 9.0
+      phase3_hz: 8.5
+      carrier_hz: 180.0
+      level: 0.013
+  - type: "sub_pulse"
+    params:
+      phase2_enabled: true
+      hz: 0.3
+      level: 0.040
+  - type: "heartbeat_cues"
+    params:
+      phase2_enabled: true
+      bpm: 60.0
+      level: 0.025

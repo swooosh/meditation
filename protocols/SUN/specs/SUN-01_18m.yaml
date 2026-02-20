@@ -1,0 +1,59 @@
+id: SUN-01
+title: "Small Universe - Beginner Orbit"
+family: SUN
+version: 1.0
+duration_s: 1080
+
+render:
+  sr: 44100
+  seed: 13001
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 250
+  signature_level: 0.012
+  family_tag: "Small Universe"
+
+phases:
+  - name: "Settle"
+    start_s: 0
+    end_s: 180
+    intent: "Relax body and gather at lower dantian"
+  - name: "Orbit Foundation"
+    start_s: 180
+    end_s: 900
+    intent: "One gentle orbit per 6-6 breath cycle"
+  - name: "Seal"
+    start_s: 900
+    end_s: 1080
+    intent: "Store and seal at lower dantian"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.046
+      drift_hz: 0.006
+      drift_depth: 0.10
+  - type: "binaural"
+    params:
+      phase1_hz: 7.5
+      phase2_hz: 8.0
+      phase3_hz: 7.0
+      carrier_hz: 180.0
+      level: 0.012
+  - type: "breath_cues"
+    phases: [2]
+    params:
+      preset: "6-6"
+      level: 0.040
+      tone_hz: 820.0
+      pan_mag: 0.18
+  - type: "pulse_cues"
+    params:
+      phase2_rate_s: 24.0
+      phase3_rate_s: 30.0
+      level: 0.018
+      freq_hz: 174.0
+breath_pattern: "6-6"

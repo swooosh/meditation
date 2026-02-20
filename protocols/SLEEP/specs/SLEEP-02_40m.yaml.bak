@@ -1,0 +1,51 @@
+id: SLEEP-02
+title: "Lucid Dream Induction — Conscious Dream Entry"
+family: SLEEP
+version: 1.0
+duration_s: 2400
+
+render:
+  sr: 44100
+  seed: 4002
+  peak_norm: true
+
+identity:
+  signature_hz: 
+  signature_ms: 
+  signature_level: 
+  family_tag: "Sleep Architecture"
+
+phases:
+  - name: "Settle"
+    start_s: 0
+    end_s: 600
+  - name: "Theta Plateau"
+    start_s: 600
+    end_s: 1800
+  - name: "Dream Threshold"
+    start_s: 1800
+    end_s: 2400
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.056
+      drift_hz: 0.004
+      drift_depth: 0.08
+  - type: "binaural"
+    params:
+      phase1_start: 8.0
+      phase1_end: 6.0
+      phase2_hz: 5.5
+      phase3_start: 5.5
+      phase3_end: 4.5
+      carrier_hz: 160.0
+      level: 0.013
+  - type: "reality_check_cues"
+    params:
+      phase2_enabled: true
+      phase3_enabled: true
+      interval_s: 180.0
+      level: 0.018
+      freq_hz: 220.0

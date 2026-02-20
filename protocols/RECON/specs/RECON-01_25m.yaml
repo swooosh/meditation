@@ -1,0 +1,57 @@
+id: RECON-01
+title: "Memory Reconsolidation Lite — Safe Reprocessing"
+family: RECON
+version: 1.0
+duration_s: 1500
+
+render:
+  sr: 44100
+  seed: 3001
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 350
+  signature_level: 0.012
+  family_tag: "Emotional Reprocessing"
+
+phases:
+  - name: "Safe Container"
+    start_s: 0
+    end_s: 300
+    intent: "Establish safety and grounding"
+  - name: "Gentle Activation"
+    start_s: 300
+    end_s: 600
+    intent: "Mild sympathetic activation"
+  - name: "Reframe Window"
+    start_s: 600
+    end_s: 1200
+    intent: "Memory access with theta support"
+  - name: "Resolution"
+    start_s: 1200
+    end_s: 1500
+    intent: "Parasympathetic integration"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.062
+      drift_hz: 0.007
+      drift_depth: 0.16
+  - type: "binaural"
+    params:
+      phase1_hz: 7.0
+      phase2_hz: 8.5
+      phase3_start: 8.5
+      phase3_end: 6.0
+      phase4_hz: 5.5
+      carrier_hz: 175.0
+      level: 0.015
+  - type: "harmonic_pad"
+    params:
+      phase3_enabled: true
+      base_freq: 174.0
+      level: 0.025
+      swell_rate_s: 90.0

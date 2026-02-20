@@ -1,0 +1,60 @@
+id: PERF-01
+title: "Pre-Mission Focus — Calm Alert Coherence"
+family: PERF
+version: 1.0
+duration_s: 720
+
+render:
+  sr: 44100
+  seed: 2001
+  peak_norm: true
+
+identity:
+  signature_hz: [220, 293, 440]
+  signature_ms: 200
+  signature_level: 0.010
+
+phases:
+  - name: "Ground"
+    start_s: 0
+    end_s: 180
+    intent: "Establish baseline calm"
+  - name: "Sharpen"
+    start_s: 180
+    end_s: 540
+    intent: "Narrow attention, increase alertness"
+  - name: "Lock"
+    start_s: 540
+    end_s: 720
+    intent: "Stable ready state"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "pink"
+      level: 0.055
+      drift_hz: 0.014
+      drift_depth: 0.12
+  - type: "binaural"
+    params:
+      phase1_hz: 8.0
+      phase2_start: 8.0
+      phase2_end: 12.0
+      phase3_hz: 12.0
+      carrier_hz: 200.0
+      level: 0.016
+  - type: "pulse_cues"
+    params:
+      phase2_rate_s: 30.0
+      phase3_rate_s: 45.0
+      level: 0.035
+      freq_hz: 440.0
+  - type: "breath_cues"
+    phases: [2, 3]
+    params:
+      preset: "4-6"
+      level: 0.020
+      tone_hz: 760.0
+      pan_mag: 0.10
+
+breath_pattern: "4-6"

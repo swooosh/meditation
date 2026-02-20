@@ -1,0 +1,41 @@
+# macOS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Python cache / virtual environments
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.coverage
+venv/
+tools/venv/
+
+# Local test/output artifacts
+test_*.wav
+test_*.mp3
+tmp/
+
+# Rendered protocol audio (large generated assets)
+protocols/*/renders/*.wav
+protocols/*/renders/*.mp3
+protocols/*/renders/*_master.wav
+protocols/*/renders/*_master.mp3
+protocols/*/renders/*_master-guided.wav
+
+# Optional web audio deploy artifacts
+web/audio/
+
+tools/renders/
+tools/test_renders/
+tools/renders/
+tools/test_renders/
+tools/renders/
+tools/test_renders/
+protocols/*/renders/
+web/audio/
+*.wav
+*.mp3

@@ -1,0 +1,47 @@
+id: META-03
+title: "No-Self Inquiry"
+family: META
+duration_s: 2100
+render:
+  sr: 44100
+  seed: 2013
+  peak_norm: true
+
+phases:
+  - name: Ground
+    start_s: 0
+    end_s: 600
+    intent: "Establish body-based stability and regulate baseline arousal"
+  - name: Dissolve
+    start_s: 600
+    end_s: 1500
+    intent: "Reduce self-referential load and stabilize observing awareness"
+  - name: Rest
+    start_s: 1500
+    end_s: 2100
+    intent: "Reintegrate and stabilize at an everyday baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: pink
+      level: 0.020
+      drift_hz: 0.01
+      drift_depth: 0.08
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 4
+      level: 0.015
+  
+  - type: sub
+    params:
+      hz_min: 40
+      hz_max: 50
+      level: 0.025
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.012

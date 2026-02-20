@@ -1,0 +1,53 @@
+id: SOC-02
+title: "Group Resonance"
+family: SOC
+duration_s: 1800
+render:
+  sr: 44100
+  seed: 2016
+  peak_norm: true
+
+phases:
+  - name: Attune
+    start_s: 0
+    end_s: 600
+    intent: "Increase interpersonal sensitivity and timing awareness"
+  - name: Sync
+    start_s: 600
+    end_s: 1200
+    intent: "Align rhythm and attention across participants"
+  - name: Resonate
+    start_s: 1200
+    end_s: 1800
+    intent: "Stabilize shared coherence without emotional spillover"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.028
+      drift_hz: 0.02
+      drift_depth: 0.12
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 7
+      level: 0.020
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 220
+      harmonics: [1, 2, 3, 4, 6]
+      level: 0.025
+  
+  - type: pulse_cues
+    params:
+      interval_s: 10
+      width_ms: 110
+      level: 0.040
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.018

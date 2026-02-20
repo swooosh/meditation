@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>John's Meditation & Breathwork Protocol Library</title> <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 2px solid #0f3460;
+        }
+        
+        h1 {
+            font-size: 2em;
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-weight: 100;
+        }
+        
+        .tagline {
+            font-size: 1.2em;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            color: #00d4ff;
+            font-weight: bold;
+        }
+        
+        .stat-label {
+            color: #808080;
+            font-size: 0.9em;
+        }
+        
+        .filters {
+            display: flex;
+            gap: 15px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .filter-btn {
+            padding: 10px 20px;
+            background: #0f3460;
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+        
+        .family-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .family-card {
+            background: rgba(15, 52, 96, 0.5);
+            border: 1px solid #0f3460;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .family-card:hover {
+            border-color: #00d4ff;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .family-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .family-name {
+            font-size: 1.5em;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+        
+        .protocol-count {
+            background: #00d4ff;
+            color: #1a1a2e;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        
+        .family-description {
+            color: #b0b0b0;
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+        
+        .protocols-list {
+            display: none;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #0f3460;
+        }
+        
+        .protocols-list.show {
+            display: block;
+        }
+        
+        .protocol-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 3px solid #00d4ff;
+            transition: all 0.2s;
+        }
+        
+        .protocol-item:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+        
+        .protocol-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .protocol-title {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 1.1em;
+        }
+        
+        .protocol-duration {
+            color: #00d4ff;
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            display: inline-block;
+            font-size: 0.75em;
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            padding: 4px 10px;
+            border-radius: 999px;
+            margin: 0 0 10px 0;
+            border: 1px solid transparent;
+        }
+
+        .status-playable {
+            color: #9ff5cf;
+            background: rgba(34, 197, 94, 0.18);
+            border-color: rgba(34, 197, 94, 0.5);
+        }
+
+        .status-qc-pending {
+            color: #c9e7ff;
+            background: rgba(14, 165, 233, 0.16);
+            border-color: rgba(14, 165, 233, 0.45);
+        }
+
+        .status-qc-hold {
+            color: #ffd2d2;
+            background: rgba(239, 68, 68, 0.18);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+
+        .status-partial {
+            color: #ffe6a6;
+            background: rgba(245, 158, 11, 0.18);
+            border-color: rgba(245, 158, 11, 0.5);
+        }
+
+        .status-not-rendered {
+            color: #ffd2d2;
+            background: rgba(239, 68, 68, 0.18);
+            border-color: rgba(239, 68, 68, 0.5);
+        }
+        
+        .protocol-description {
+            color: #a0a0a0;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+        
+        .protocol-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-play {
+            background: #00d4ff;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        .btn-play:hover {
+            background: #00b8e6;
+            transform: scale(1.05);
+        }
+
+        .btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-docs {
+            background: transparent;
+            border: 1px solid #00d4ff;
+            color: #00d4ff;
+        }
+        
+        .btn-docs:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+
+        .diagram-controls {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .diagram-btn.active {
+            background: rgba(0, 212, 255, 0.2);
+            border-color: #00d4ff;
+            color: #c8f4ff;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            border: 2px solid #00d4ff;
+            border-radius: 12px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 2em;
+            color: #00d4ff;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .audio-player {
+            background: rgba(15, 52, 96, 0.5);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .audio-mode-toggle {
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .audio-mode-label {
+            color: #bdefff;
+            font-size: 0.95em;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .audio-mode-text {
+            color: #8bc7d6;
+            font-size: 0.9em;
+        }
+        
+        .narration {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .narration h3 {
+            color: #00d4ff;
+            margin-bottom: 15px;
+        }
+        
+        .narration-intro {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            border-left: 3px solid #00d4ff;
+        }
+        
+        .docs-section {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 15px;
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .docs-section h2, .docs-section h3, .docs-section h4 {
+            color: #00d4ff;
+        }
+        
+        .docs-section p {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+        
+        .docs-section li {
+            color: #b0b0b0;
+            line-height: 1.6;
+        }
+
+        .docs-section ul,
+        .docs-section ol {
+            margin: 8px 0 8px 22px;
+        }
+
+        .docs-section blockquote.md-quote {
+            border-left: 3px solid rgba(0, 212, 255, 0.5);
+            margin: 12px 0;
+            padding: 4px 0 4px 12px;
+            background: rgba(0, 212, 255, 0.06);
+            border-radius: 4px;
+        }
+        
+        .docs-section strong {
+            color: #ffffff;
+        }
+        
+        .docs-section code {
+            background: rgba(0, 212, 255, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #00d4ff;
+            font-family: monospace;
+        }
+
+        .docs-section pre {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 8px;
+            padding: 12px;
+            overflow-x: auto;
+            margin: 12px 0;
+        }
+
+        .docs-section pre code {
+            background: transparent;
+            padding: 0;
+            color: #bdefff;
+        }
+
+        .docs-section table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+        }
+
+        .docs-section th,
+        .docs-section td {
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        .docs-section th {
+            color: #bdefff;
+            background: rgba(0, 212, 255, 0.08);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+            border-top: 1px solid #0f3460;
+            color: #808080;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>John's Meditation and Breathwork Protocol Library</h1>
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number" id="protocolCount">35</div>
+                    <div class="stat-label">Protocols</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="familyCount">13</div>
+                    <div class="stat-label">Families</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number" id="totalAudio">15h</div>
+                    <div class="stat-label">Total Audio</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="filters" id="filters"></div>
+
+        <div class="family-grid" id="familyGrid"></div>
+    </div>
+
+    <div class="modal" id="protocolModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>John's Meditation Protocol Lab &copy; 2026 | <span id="footerSummary">35 Protocols Across 13 Families</span></p>
+        <p style="margin-top: 10px; font-size: 0.9em;">Advanced meditation and breathwork for cognitive enhancement, emotional processing, and consciousness exploration</p>
+    </footer>
+
+    <script src="protocols-data.js"></script>
+    <script src="render-status.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

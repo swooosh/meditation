@@ -1,0 +1,53 @@
+id: FSP-02
+title: "Distributed Attention"
+family: ATTN
+duration_s: 1500
+render:
+  sr: 44100
+  seed: 2005
+  peak_norm: true
+
+phases:
+  - name: Anchor
+    start_s: 0
+    end_s: 300
+    intent: "Anchor awareness to breath and posture"
+  - name: Distribute
+    start_s: 300
+    end_s: 1200
+    intent: "Broaden attentional field while preserving center"
+  - name: Integrate
+    start_s: 1200
+    end_s: 1500
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.035
+      drift_hz: 0.02
+      drift_depth: 0.12
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 10
+      level: 0.025
+  
+  - type: spatial_sweep
+    params:
+      sweep_period_s: 8.0
+      pan_depth: 0.6
+      level: 0.030
+  
+  - type: pulse_cues
+    params:
+      interval_s: 12
+      width_ms: 80
+      level: 0.045
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

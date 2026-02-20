@@ -1,0 +1,53 @@
+id: PAIN-01
+title: "Gate Control"
+family: PAIN
+duration_s: 900
+render:
+  sr: 44100
+  seed: 2017
+  peak_norm: true
+
+phases:
+  - name: Locate
+    start_s: 0
+    end_s: 300
+    intent: "Locate and characterize salient sensation without reactivity"
+  - name: Modulate
+    start_s: 300
+    end_s: 720
+    intent: "Shift signal weighting through paced attention and breath"
+  - name: Release
+    start_s: 720
+    end_s: 900
+    intent: "Release residual tension and return to balance"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: pink
+      level: 0.035
+      drift_hz: 0.04
+      drift_depth: 0.15
+  
+  - type: binaural
+    params:
+      base_hz: 220
+      delta_hz: 10
+      level: 0.028
+  
+  - type: pulse_cues
+    params:
+      interval_s: 6
+      width_ms: 100
+      level: 0.045
+  
+  - type: sub
+    params:
+      hz_min: 48
+      hz_max: 55
+      level: 0.040
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

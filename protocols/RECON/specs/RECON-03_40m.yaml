@@ -1,0 +1,53 @@
+id: RECON-03
+title: "Shadow Integration"
+family: RECON
+duration_s: 2400
+render:
+  sr: 44100
+  seed: 2008
+  peak_norm: true
+
+phases:
+  - name: Ground
+    start_s: 0
+    end_s: 600
+    intent: "Establish body-based stability and regulate baseline arousal"
+  - name: Explore
+    start_s: 600
+    end_s: 1800
+    intent: "Engage material with steady attention and emotional range"
+  - name: Integrate
+    start_s: 1800
+    end_s: 2400
+    intent: "Consolidate gains and return to a usable baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.040
+      drift_hz: 0.02
+      drift_depth: 0.18
+  
+  - type: binaural
+    params:
+      base_hz: 174
+      delta_hz: 4
+      level: 0.030
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 110
+      harmonics: [1, 2, 3, 5]
+      level: 0.025
+  
+  - type: pulse_cues
+    params:
+      interval_s: 20
+      width_ms: 100
+      level: 0.040
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.018

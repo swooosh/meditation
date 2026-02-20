@@ -1,0 +1,75 @@
+id: ARC-2
+title: "Gentle Activation"
+family: ARC
+duration_s: 2700
+render:
+  sr: 44100
+  seed: 2004
+  peak_norm: true
+
+phases:
+  - name: Ground
+    start_s: 0
+    end_s: 600
+    intent: "Establish body-based stability and regulate baseline arousal"
+    bpm: 6
+  - name: Ramp
+    start_s: 600
+    end_s: 1200
+    intent: "Increase activation gradually while maintaining control"
+    bpm_start: 6
+    bpm_end: 12
+  - name: Plateau
+    start_s: 1200
+    end_s: 2100
+    intent: "Sustain target intensity with steady pacing"
+    bpm: 12
+  - name: Descent
+    start_s: 2100
+    end_s: 2700
+    intent: "Reduce activation smoothly and recover regulation"
+    bpm_start: 12
+    bpm_end: 6
+
+audio_layers:
+  - type: tribal_drums
+    params:
+      floor_level: 0.025
+      drum_level: 0.055
+      accent_level: 0.040
+      shaker_level: 0.030
+      intensity_scale: 0.5
+      frame_f0: 76.0
+      frame_dur_s: 0.115
+      tom_f0: 60.0
+      tom_dur_s: 0.165
+      floor_jitter_s: 0.006
+      drum_jitter_s: 0.010
+      accent_jitter_s: 0.012
+      shaker_jitter_s: 0.010
+      phase4_peak_multiplier: 1.10
+      phase4_recover_multiplier: 0.90
+      accent_peak_multiplier: 1.15
+      accent_recover_multiplier: 0.75
+      shaker_peak_multiplier: 1.10
+  
+  - type: sub
+    params:
+      mode: breath_locked
+      block_seconds: 1.0
+      hz_min: 48
+      hz_max: 54
+      level: 0.040
+      phase4_peak_multiplier: 1.08
+      phase4_recover_multiplier: 0.92
+  
+  - type: room_illusion
+    params:
+      enabled: true
+      room_ms: 11
+      room_level: 0.020
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.018

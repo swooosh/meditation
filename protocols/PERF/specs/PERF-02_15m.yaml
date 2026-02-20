@@ -1,0 +1,52 @@
+id: PERF-02
+title: "Post-Performance Recovery — Parasympathetic Return"
+family: PERF
+version: 1.0
+duration_s: 900
+
+render:
+  sr: 44100
+  seed: 2002
+  peak_norm: true
+
+identity:
+  signature_hz: [220, 293, 440]
+  signature_ms: 200
+  signature_level: 0.010
+  family_tag: "Performance State"
+
+phases:
+  - name: "Acknowledge"
+    start_s: 0
+    end_s: 180
+    intent: "Recognize completion"
+  - name: "Descend"
+    start_s: 180
+    end_s: 720
+    intent: "Gradual parasympathetic activation"
+  - name: "Integrate"
+    start_s: 720
+    end_s: 900
+    intent: "Settle into baseline"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.058
+      drift_hz: 0.009
+      drift_depth: 0.14
+  - type: "binaural"
+    params:
+      phase1_hz: 12.0
+      phase2_start: 12.0
+      phase2_end: 8.0
+      phase3_hz: 6.0
+      carrier_hz: 190.0
+      level: 0.015
+  - type: "resolution_cues"
+    params:
+      phase1_enabled: true
+      phase3_enabled: true
+      level: 0.030
+      freq_hz: 174.0

@@ -1,0 +1,54 @@
+id: SLEEP-01
+title: "Hypnagogic Drift — Theta Descent"
+family: SLEEP
+version: 1.0
+duration_s: 1800
+
+render:
+  sr: 44100
+  seed: 4001
+  peak_norm: true
+
+identity:
+  signature_hz: 
+  signature_ms: 
+  signature_level: 
+  family_tag: "Sleep Architecture"
+
+phases:
+  - name: "Settle"
+    start_s: 0
+    end_s: 300
+    intent: "Initial relaxation"
+  - name: "Descent"
+    start_s: 300
+    end_s: 1200
+    intent: "Gradual theta descent"
+  - name: "Threshold"
+    start_s: 1200
+    end_s: 1800
+    intent: "Hypnagogic boundary"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.058
+      drift_hz: 0.005
+      drift_depth: 0.08
+  - type: "binaural"
+    params:
+      phase1_start: 8.0
+      phase1_end: 6.5
+      phase2_start: 6.5
+      phase2_end: 4.5
+      phase3_hz: 4.0
+      carrier_hz: 160.0
+      level: 0.014
+  - type: "dissolve_cues"
+    params:
+      phase2_rate_s: 120.0
+      phase3_rate_s: 180.0
+      level: 0.020
+      freq_start: 220.0
+      freq_end: 110.0

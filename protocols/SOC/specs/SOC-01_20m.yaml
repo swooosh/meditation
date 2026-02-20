@@ -1,0 +1,53 @@
+id: SOC-01
+title: "Dyadic Breath Sync — Two-Person Coherence"
+family: SOC
+version: 1.0
+duration_s: 1200
+
+render:
+  sr: 44100
+  seed: 9001
+  peak_norm: true
+
+identity:
+  signature_hz: [220, 293, 440]
+  signature_ms: 250
+  signature_level: 0.012
+  family_tag: "Social Coherence"
+
+phases:
+  - name: "Individual"
+    start_s: 0
+    end_s: 300
+    intent: "Establish individual rhythm"
+  - name: "Alternating"
+    start_s: 300
+    end_s: 720
+    intent: "Alternate breath cues L/R"
+  - name: "Converge"
+    start_s: 720
+    end_s: 1200
+    intent: "Synchronized breathing"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.056
+      drift_hz: 0.008
+      drift_depth: 0.12
+  - type: "binaural"
+    params:
+      phase1_hz: 8.0
+      phase2_hz: 7.5
+      phase3_hz: 7.0
+      carrier_hz: 185.0
+      level: 0.014
+  - type: "dyadic_cues"
+    params:
+      phase1_mode: "individual"
+      phase2_mode: "alternating"
+      phase3_mode: "synchronized"
+      breath_rate: 6.0
+      level: 0.045
+      pan_separation: 0.6

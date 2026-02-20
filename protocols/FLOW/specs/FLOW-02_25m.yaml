@@ -1,0 +1,53 @@
+id: FLOW-02
+title: "Deep Immersion"
+family: FLOW
+duration_s: 1500
+render:
+  sr: 44100
+  seed: 2015
+  peak_norm: true
+
+phases:
+  - name: Entry
+    start_s: 0
+    end_s: 300
+    intent: "Transition from scattered attention into coherent focus"
+  - name: Deepen
+    start_s: 300
+    end_s: 1200
+    intent: "Deepen immersion while reducing self-monitoring"
+  - name: Sustain
+    start_s: 1200
+    end_s: 1500
+    intent: "Maintain continuity of the trained state with low effort"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: brown
+      level: 0.032
+      drift_hz: 0.02
+      drift_depth: 0.14
+  
+  - type: binaural
+    params:
+      base_hz: 220
+      delta_hz: 10
+      level: 0.025
+  
+  - type: harmonic_pad
+    params:
+      root_hz: 174
+      harmonics: [1, 2, 3, 5, 8]
+      level: 0.022
+  
+  - type: pulse_cues
+    params:
+      interval_s: 15
+      width_ms: 100
+      level: 0.038
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020

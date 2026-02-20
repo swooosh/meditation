@@ -1,0 +1,53 @@
+id: SENSE-01
+title: "Hyper-Perceptual Field — Sensory Amplification"
+family: SENSE
+version: 1.0
+duration_s: 600
+
+render:
+  sr: 44100
+  seed: 6001
+  peak_norm: true
+
+identity:
+  signature_hz: [440, 587, 880]
+  signature_ms: 150
+  signature_level: 0.012
+  family_tag: "Sensory Precision"
+
+phases:
+  - name: "Calibrate"
+    start_s: 0
+    end_s: 120
+    intent: "Baseline sensory awareness"
+  - name: "Amplify"
+    start_s: 120
+    end_s: 480
+    intent: "Increase resolution"
+  - name: "Integrate"
+    start_s: 480
+    end_s: 600
+    intent: "Stabilize heightened state"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "pink"
+      level: 0.052
+      drift_hz: 0.016
+      drift_depth: 0.14
+      high_shelf: 0.15
+  - type: "binaural"
+    params:
+      phase1_hz: 12.0
+      phase2_start: 12.0
+      phase2_end: 16.0
+      phase3_hz: 15.0
+      carrier_hz: 210.0
+      level: 0.014
+  - type: "shimmer"
+    params:
+      phase2_enabled: true
+      freq_range: [3000, 8000]
+      level: 0.008
+      modulation_hz: 0.3

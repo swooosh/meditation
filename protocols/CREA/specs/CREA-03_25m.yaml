@@ -1,0 +1,50 @@
+id: CREA-03
+title: "Pattern Disruption"
+family: CREA
+duration_s: 1500
+render:
+  sr: 44100
+  seed: 2010
+  peak_norm: true
+
+phases:
+  - name: Baseline
+    start_s: 0
+    end_s: 300
+    intent: "Map current state clearly before modulation"
+  - name: Disrupt
+    start_s: 300
+    end_s: 1200
+    intent: "Open cognitive flexibility and increase associative range"
+  - name: Emerge
+    start_s: 1200
+    end_s: 1500
+    intent: "Reintegrate and stabilize at an everyday baseline"
+
+audio_layers:
+  - type: noise_bed
+    params:
+      noise_type: white
+      level: 0.030
+      drift_hz: 0.06
+      drift_depth: 0.20
+  
+  - type: irregular_pulses
+    params:
+      min_interval_s: 3
+      max_interval_s: 15
+      width_ms: 150
+      level: 0.050
+  
+  - type: gamma_overlay
+    params:
+      phase2_enabled: true
+      phase3_enabled: false
+      freq_hz: 40
+      burst_rate_s: 8
+      level: 0.035
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 300
+  signature_level: 0.020
