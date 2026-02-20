@@ -71,3 +71,26 @@ Seal : 1980, 180
 | Full Orbit | 20:00 | 33:00 | One full orbit per long breath cycle |
 | Seal | 33:00 | 36:00 | Return all energy to lower dantian and seal |
 
+## SUN-04 - Small Universe - 13-Point Dantian Orbit
+
+Duration: **30m** (1800s)
+
+```mermaid
+gantt
+title SUN-04 Phase Timeline
+dateFormat X
+axisFormat %M:%S
+section Session
+Settle and Connect : 0, 180
+Guided 13-Point Orbit : 180, 900
+Self Practice : 1080, 540
+Seal : 1620, 180
+```
+
+| Phase | Start | End | Intent |
+|---|---:|---:|---|
+| Settle and Connect | 00:00 | 03:00 | Relax body, tongue on palate, and gather at lower dantian |
+| Guided 13-Point Orbit | 03:00 | 18:00 | Inhale receive at current point, exhale move to next point through full pathway |
+| Self Practice | 18:00 | 27:00 | Continue full 13-point orbit independently with even breath |
+| Seal | 27:00 | 30:00 | Store energy in lower dantian and close gently |
+

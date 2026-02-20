@@ -66,6 +66,7 @@
 - [SUN-01: Small Universe - Beginner Orbit](protocols/SUN-01.md) - 18m - See protocol documentation
 - [SUN-02: Small Universe - Intermediate Orbit](protocols/SUN-02.md) - 24m - See protocol documentation
 - [SUN-03: Small Universe - Advanced Three Dantian Orbit](protocols/SUN-03.md) - 36m - See protocol documentation
+- [SUN-04: Small Universe - 13-Point Dantian Orbit](protocols/SUN-04.md) - 30m - Guided inhale-receive/exhale-transfer pathway cycle
 
 ## Quick Selection Guide
 

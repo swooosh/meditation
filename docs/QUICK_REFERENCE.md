@@ -269,6 +269,12 @@ For visual architecture and phase maps, see `DIAGRAMS_INDEX.md`.
 **Intensity**: Medium  
 **Effects**: Deepened internal coherence and energetic stability  
 
+### SUN-04: Small Universe - 13-Point Dantian Orbit (30m)
+**What**: Full 13-point inhale-receive/exhale-transfer orbit pathway cycle  
+**When**: Structured internal circulation practice with precise point tracking  
+**Intensity**: Medium  
+**Effects**: Clearer pathway continuity, stronger lower-dantian closure  
+
 ---
 
 ## Quick Selection Matrix
@@ -286,3 +292,4 @@ For visual architecture and phase maps, see `DIAGRAMS_INDEX.md`.
 | With partner | SOC-01 | 20m |
 | After stress | PERF-02 | 15m |
 | Small Universe intro | SUN-01 | 18m |
+| 13-point dantian orbit | SUN-04 | 30m |

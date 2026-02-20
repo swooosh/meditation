@@ -110,7 +110,8 @@ const PROTOCOLS = {
         protocols: [
             { id: "SUN-01", title: "Small Universe - Beginner Orbit", duration: "18m", goal: "Foundational 6-6 orbit breathing" },
             { id: "SUN-02", title: "Small Universe - Intermediate Orbit", duration: "24m", goal: "6-8 ascent/descent circulation" },
-            { id: "SUN-03", title: "Small Universe - Advanced Three Dantian Orbit", duration: "36m", goal: "Long-cycle orbit with dantian emphasis" }
+            { id: "SUN-03", title: "Small Universe - Advanced Three Dantian Orbit", duration: "36m", goal: "Long-cycle orbit with dantian emphasis" },
+            { id: "SUN-04", title: "Small Universe - 13-Point Dantian Orbit", duration: "30m", goal: "Inhale-receive/exhale-transfer full 13-point pathway training" }
         ]
     }
 };

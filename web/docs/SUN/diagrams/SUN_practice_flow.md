@@ -22,7 +22,7 @@ flowchart TD
   MD --> F
 ```
 
-Breath presets detected: **6-6 (2), 6-8 (2), 10-10 (2)**
+Breath presets detected: **6-6 (4), 6-8 (2), 10-10 (2)**
 
 ## Protocol Coverage
 
@@ -31,4 +31,5 @@ Breath presets detected: **6-6 (2), 6-8 (2), 10-10 (2)**
 | `SUN-01` | Store and seal at lower dantian |
 | `SUN-02` | Store and seal at lower dantian |
 | `SUN-03` | Return all energy to lower dantian and seal |
+| `SUN-04` | Store energy in lower dantian and close gently |
 

@@ -1,0 +1,71 @@
+id: SUN-04
+title: "Small Universe - 13-Point Dantian Orbit"
+family: SUN
+version: 1.0
+duration_s: 1800
+
+render:
+  sr: 44100
+  seed: 13004
+  peak_norm: true
+
+identity:
+  signature_hz: [174, 220, 293]
+  signature_ms: 280
+  signature_level: 0.012
+  family_tag: "Small Universe"
+
+phases:
+  - name: "Settle and Connect"
+    start_s: 0
+    end_s: 180
+    intent: "Relax body, tongue on palate, and gather at lower dantian"
+  - name: "Guided 13-Point Orbit"
+    start_s: 180
+    end_s: 1080
+    intent: "Inhale receive at current point, exhale move to next point through full pathway"
+  - name: "Self Practice"
+    start_s: 1080
+    end_s: 1620
+    intent: "Continue full 13-point orbit independently with even breath"
+  - name: "Seal"
+    start_s: 1620
+    end_s: 1800
+    intent: "Store energy in lower dantian and close gently"
+
+audio_layers:
+  - type: "noise_bed"
+    params:
+      noise: "brown"
+      level: 0.043
+      drift_hz: 0.004
+      drift_depth: 0.09
+  - type: "binaural"
+    params:
+      phase1_hz: 7.2
+      phase2_hz: 8.0
+      phase3_hz: 7.8
+      phase4_hz: 6.6
+      carrier_hz: 182.0
+      level: 0.011
+  - type: "breath_cues"
+    phases: [2, 3]
+    params:
+      preset: "6-6"
+      level: 0.036
+      tone_hz: 830.0
+      pan_mag: 0.20
+  - type: "pulse_cues"
+    params:
+      phase2_rate_s: 12.0
+      phase3_rate_s: 12.0
+      phase4_rate_s: 30.0
+      level: 0.016
+      freq_hz: 174.0
+  - type: "spatial_sweep"
+    params:
+      sweep_period_s: 13.0
+      pan_depth: 0.28
+      level: 0.010
+
+breath_pattern: "6-6"
